@@ -1,6 +1,8 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import HelloWorld from '@/components/HelloWorld'
+import Header from '@/components/Header'
+import Sidebar from '@/components/Sidebar'
+import Index from '@/components/Index'
 import Home from '@/components/Home'
 
 Vue.use(Router)
@@ -9,13 +11,20 @@ export default new Router({
   routes: [
     {
       path: '/',
-      name: 'HelloWorld',
-      component: HelloWorld
+      name: 'Index',
+      components: {
+        default: Home,
+        header: Header
+      }
     },
     {
       path: '/home',
       name: 'Home',
-      component: Home
+      components: {
+        default: Home,
+        header: Header,
+        sidebar: Sidebar
+      }
     }
   ]
 })
