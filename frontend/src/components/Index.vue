@@ -1,105 +1,67 @@
 <template>
-  <div class="hello">
-    <h1>{{ msg }}</h1>
-    <h2>Essential Links</h2>
-    <ul>
-      <li>
-        <a
-          href="https://vuejs.org"
-          target="_blank"
-        >
-          Core Docs
-        </a>
-      </li>
-      <li>
-        <a
-          href="https://forum.vuejs.org"
-          target="_blank"
-        >
-          Forum
-        </a>
-      </li>
-      <li>
-        <a
-          href="https://chat.vuejs.org"
-          target="_blank"
-        >
-          Community Chat
-        </a>
-      </li>
-      <li>
-        <a
-          href="https://twitter.com/vuejs"
-          target="_blank"
-        >
-          Twitter
-        </a>
-      </li>
-      <br>
-      <li>
-        <a
-          href="http://vuejs-templates.github.io/webpack/"
-          target="_blank"
-        >
-          Docs for This Template
-        </a>
-      </li>
-    </ul>
-    <h2>Ecosystem</h2>
-    <ul>
-      <li>
-        <a
-          href="http://router.vuejs.org/"
-          target="_blank"
-        >
-          vue-router
-        </a>
-      </li>
-      <li>
-        <a
-          href="http://vuex.vuejs.org/"
-          target="_blank"
-        >
-          vuex
-        </a>
-      </li>
-      <li>
-        <a
-          href="http://vue-loader.vuejs.org/"
-          target="_blank"
-        >
-          vue-loader
-        </a>
-      </li>
-      <li>
-        <a
-          href="https://github.com/vuejs/awesome-vue"
-          target="_blank"
-        >
-          awesome-vue
-        </a>
-      </li>
-    </ul>
+  <div>
+    <a-divider>
+        <h2>高科大社團管理系統</h2>
+    </a-divider>
+    <a-row type="flex" justify="center" align="top" :style="{ 'margin-bottom': '50px' }">
+      <a-col :span="3">
+        <router-link to="/home" class="google-signin-button" text-align=center>
+          <a-icon type="google" :style="{ 'margin-right': '10px' }" /> 使用 Google 登入
+        </router-link>
+      </a-col>
+    </a-row>
+    <a-row type="flex" justify="center" align="middle">
+      <a-col :span="12">
+        <router-view/>
+      </a-col>
+    </a-row>
+    <!-- <button v-google-login-button="clientId" class="google-signin-button" text-align=center>
+      Continue with Google
+    </button> -->
+    <!-- <div :style="{ textAlign: 'center' }">
+    </div> -->
   </div>
 </template>
 
 <script>
+/* eslint-disable */
+// import GoogleLoginButton from 'vue-google-login-button-directive'
 export default {
   name: 'Index',
   data () {
     return {
-      msg: 'Welcome to Your Vue.js App'
+
     }
+  },
+  mounted () {
+    // $("#menu-toggle").click(function(e) {
+    //   e.preventDefault();
+    //   $("#wrapper").toggleClass("toggled");
+    // });
   }
+  // directives: {
+  //     GoogleLoginButton
+  //   },
+  //   data: () => ({
+  //     clientId: 'Your_Google_Client-Id'
+  //   }),
+  //   methods: {
+  //     OnGoogleAuthSuccess(idToken) {
+  //       // Receive the idToken and make your magic with the backend
+  //     },
+  //     OnGoogleAuthFail(error) {
+  //       console.log(error)
+  //     }
+  //   }
 }
 </script>
-
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 h1, h2 {
-  font-weight: normal;
+  font-weight: bold;
+  font-size: 42px;
 }
-ul {
+/* ul {
   list-style-type: none;
   padding: 0;
 }
@@ -109,5 +71,14 @@ li {
 }
 a {
   color: #42b983;
-}
+} */
+.google-signin-button {
+    color: white;
+    background-color: rgb(8, 18, 59);
+    height: 50px;
+    font-size: 16px;
+    border-radius: 10px;
+    padding: 20px 20px 25px 20px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  }
 </style>
