@@ -28,6 +28,7 @@
       <div class="editable-row-operations">
         <span v-if="record.editable">
           <a @click="() => save(record.key)">Save</a>
+          <a-divider type="vertical" />
           <a-popconfirm title="Sure to cancel?" @confirm="() => cancel(record.key)">
             <a>Cancel</a>
           </a-popconfirm>
@@ -35,7 +36,7 @@
         <span v-else>
           <a :disabled="editingKey !== ''" @click="() => edit(record.key)">Edit</a>
           <a-divider type="vertical" />
-          <a href="javascript:;">Delete</a>
+          <a @click="() => onDelete(record.key)">Delete</a>
         </span>
       </div>
     </template>
@@ -78,7 +79,7 @@ const columns = [
 ];
 
 const data = [];
-for (let i = 11; i < 30; i++) {
+for (let i = 11; i < 29; i++) {
   data.push({
     key: i.toString(),
     grades: `四資工三甲`,
@@ -91,7 +92,7 @@ export default {
   name: 'Member',
   data () {
     return {
-
+      
     }
   },
   mounted () {
@@ -106,6 +107,7 @@ export default {
       data,
       columns,
       editingKey: '',
+      count:29,
     };
   },
   methods: {
@@ -150,16 +152,20 @@ export default {
       }
     },
     handleAdd() {
-      const { count, dataSource } = this;
+      const { count, data } = this;
       const newData = {
-        key: count,
-        grades: `4csie ${i}`,
-        number: 1,
-        name: `Edrward ${i}`,
-        office: `社員 ${i}`,
+        key: count.toString(),
+        grades: `四資工三甲`,
+        number: `C1071511${count}`,
+        name: `Edrward ${count}`,
+        office: `社員`,
       }
-      this.dataSource = [...dataSource, newData];
+      this.data = [...data, newData];
       this.count = count + 1;
+    },
+    onDelete(key) {
+      const data = [...this.data];
+      this.data = data.filter(item => item.key !== key);
     },
   },
 };
