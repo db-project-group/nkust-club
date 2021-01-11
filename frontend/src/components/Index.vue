@@ -4,11 +4,10 @@
         <h2>高科大社團管理系統</h2>
     </a-divider>
     <a-row type="flex" justify="center" align="top" :style="{ 'margin-bottom': '50px' }">
-      <a-col :span="3">
-        <router-link to="/home" class="google-signin-button" text-align=center>
-          <a-icon type="google" :style="{ 'margin-right': '10px' }" /> 使用 Google 登入
-        </router-link>
-      </a-col>
+      <!-- <router-link to="/home" class="google-signin-button" text-align=center>
+        <a-icon type="google" :style="{ 'margin-right': '10px' }" /> 使用 Google 登入
+      </router-link> -->
+      <div class="g-signin2" data-onsuccess="onSignIn"></div>
     </a-row>
     <a-row type="flex" justify="center" align="middle">
       <a-col :span="12">
@@ -75,10 +74,10 @@ a {
 .google-signin-button {
     color: white;
     background-color: rgb(8, 18, 59);
-    height: 50px;
+    height: 60px;
     font-size: 16px;
     border-radius: 10px;
-    padding: 20px 20px 25px 20px;
+    padding: 17px 20px 25px 20px;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
   }
 </style>
