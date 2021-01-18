@@ -10,21 +10,36 @@ import GAuth from 'vue-google-oauth2'
 import axios from 'axios'
 import VueAxios from 'vue-axios'
 
-/* eslint-disable no-new */
 Vue.config.productionTip = false
 
-Vue.use(Antd)
+const instance = axios.create({
+  baseURL: 'http://localhost:5000/api/v1/',
+  headers: { 'Content-Type': 'application/json' },
+  timeout: 2000
+})
 
-Vue.use(VueAxios, axios)
+instance.interceptors.request.use(
+  config => {
+    if (localStorage.JWT_TOKEN) {
+      config.headers.Authorization = `token ${localStorage.JWT_TOKEN}`
+    }
+    return config
+  },
+  err => {
+    return Promise.reject(err)
+  })
 
 const gauthOptions = {
-  clientId: '687495968491-6k4toog7o8ajqvie4mj28pjnbkgnishm.apps.googleusercontent.com',
+  clientId: '612719863118-7j2h2p13ggleivj2a3sgbp6jrsnfchmi.apps.googleusercontent.com',
   scope: 'profile email',
   prompt: 'select_account'
 }
 
 Vue.use(GAuth, gauthOptions)
+Vue.use(VueAxios, instance)
+Vue.use(Antd)
 
+/* eslint-disable no-new */
 window.app = new Vue({
   el: '#app',
   router,

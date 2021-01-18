@@ -35,25 +35,27 @@ export default {
 
     }
   },
-  
+
   methods: {
     onSignIn(){
       this.$gAuth.signIn()
-      .then(user => {
-        // On success do something, refer to https://developers.google.com/api-client-library/javascript/reference/referencedocs#googleusergetid
-        console.log('user', user)
-        this.isSignIn = this.$gAuth.isAuthorized
-        this.axios.post('/api/v1/auth', JSON.stringify({id_token: user.Bc.id_token}), {headers: {'Content-Type': 'application/json' }}).then((response) => {
-          console.log(response.data)
-          this.store.state = {
-            user: response.data,
-            isLoading: true
-          }
-          })
-      })
-      .catch(error  => {
-        console.log('error', error)
-      })
+        .then(user => {
+          console.log('user', user)
+          this.isSignIn = this.$gAuth.isAuthorized
+          this.axios.post(
+              '/auth',
+              JSON.stringify({ id_token: user.Bc.id_token }
+            )).then((response) => {
+              console.log(response.data)
+              // this.store.state = {
+              //   user: response.data,
+              //   isLoading: true
+              // }
+            })
+        })
+        .catch(error  => {
+          console.log('error', error)
+        })
     },
     // test2(){
     //   this.axios.post('/api/v1/JWT_access_token', JSON.stringify({id_token: user.Bc.id_token}), {headers: {'Content-Type': 'application/json' }}).then((response) => {
