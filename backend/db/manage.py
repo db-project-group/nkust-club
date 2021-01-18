@@ -1,3 +1,4 @@
+from re import M
 from flask import Blueprint
 from db.model import *
 from db.data import InitData, TestData
@@ -12,6 +13,7 @@ def init():
         co_list = []
         cl_list = []
         j_list = []
+        
         for committee in InitData.committees:
             co = Committee(*committee)
             co_list.append(co)
@@ -35,4 +37,19 @@ def init():
 
 @db_data.cli.command("test")
 def test():
-    pass
+    s_list = []
+    m_list = []
+    
+    for student in TestData.students:
+        s = Student(*student)
+        s_list.append(s)
+    
+    for member in TestData.members:
+        m = Member(*member)
+        m_list.append(m)
+        
+    db.session.add_all(s_list)
+    db.session.add_all(m_list)
+    db.session.commit()
+
+    print("Insert test data done.")

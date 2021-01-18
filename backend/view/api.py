@@ -4,12 +4,13 @@ from flask import Blueprint, request, jsonify, make_response
 from flask_jwt_extended import create_access_token, create_refresh_token, get_jwt_identity, jwt_required, jwt_refresh_token_required
 from google.oauth2 import id_token
 from google.auth.transport import requests
+from controller.club import ClubController
 
 api = Blueprint('api', __name__)
 
 GOOGLE_OAUTH2_CLIENT_ID = '612719863118-7j2h2p13ggleivj2a3sgbp6jrsnfchmi.apps.googleusercontent.com'
 
-@api.route('/auth', methods = ['POST', 'OPTIONS'])
+@api.route('/auth', methods = ['POST'])
 def auth():
     token = request.json['id_token']
     try:
@@ -25,29 +26,39 @@ def auth():
         name = id_info['name']
         student_id = email.split("@")[0].upper()
         
-        access_token = create_access_token(email)
+        access_token = create_access_token(student_id)
         # refresh_token = create_refresh_token(token)
         
-        return jsonify({ 'access_token': access_token, 'student_id': student_id, 'email': email, 'name': name }), 200
+        return jsonify({'access_token': access_token, 'student_id': student_id, 'email': email, 'name': name}), 200
     except ValueError:
         # Invalid token
         raise ValueError('Invalid token')
 
-@api.route('/JWT_access_token', methods = ['post'])
-@jwt_required
-def JWT_access():
-    username = get_jwt_identity()
-    return jsonify(loggin_in_as = username), 200
 
-@api.route('/JWT_refresh_token', methods = ['post'])
+@api.route('/auth/refresh', methods=['POST'])
 @jwt_refresh_token_required
-def JWT_refresh():
-    current_user = get_jwt_identity()
-    ret = {
-        'access_token': create_access_token(identity=current_user)
-    }
-    return jsonify(ret), 200
+def auth_refresh():
+    student_id = get_jwt_identity()
+    return jsonify({'access_token': create_access_token(student_id)}), 200
 
+
+@api.route('/club', methods=['GET'])
+@jwt_required
+def get_clubs():
+    student_id = get_jwt_identity()
+    rs = ClubController.get_clubs(student_id)
+    return jsonify(clubs=rs), 200
+
+
+@api.route('/club/<int:club_id>', methods=['GET'])
+@jwt_required
+def get_club(club_id):
+    student_id = get_jwt_identity()
+    
+    rs = ClubController.get_club(student_id, club_id)
+    if rs == -1:
+        return jsonify(), 403
+    return jsonify(club=rs), 200
 
 
 # api.add_url_rule('/graphql', view_func=GraphQLView.as_view(

@@ -1,4 +1,5 @@
 from flask_sqlalchemy import SQLAlchemy
+import json
 
 
 db = SQLAlchemy()
@@ -26,7 +27,12 @@ class Student(db.Model):
         self.phone = phone
         
     def __repr__(self):
-        return f'{self.__class__.__name__}: {self.id} ({self.name})'
+        return json.dumps({
+            'id': self.id,
+            'name': self.name,
+            'department': self.department,
+            'phone': self.phone
+        })
     
 
 class Committee(db.Model):
@@ -49,8 +55,11 @@ class Committee(db.Model):
         self.level = level
 
     def __repr__(self):
-        return f'{self.__class__.__name__}: {self.id} ({self.name}), level: {self.level}'
-
+        return json.dumps({
+            'id': self.id,
+            'name': self.name,
+            'level': self.level
+        })
 
 class Club(db.Model):
     '''
@@ -71,8 +80,11 @@ class Club(db.Model):
         self.committee_id = committee_id
 
     def __repr__(self):
-        return f'{self.__class__.__name__}: {self.id} ({self.name}), committee: {self.committee_id}'
-    
+        return json.dumps({
+            'id': self.id,
+            'name': self.name,
+            'committee_id': self.committee_id
+        })
 
 class Job(db.Model):
     '''
@@ -93,8 +105,11 @@ class Job(db.Model):
         self.level = level
 
     def __repr__(self):
-        return f'{self.__class__.__name__}: {self.id} ({self.name}), level: {self.level}'
-    
+        return json.dumps({
+            'id': self.id,
+            'name': self.name,
+            'level': self.level
+        })
 
 class Member(db.Model):
     '''
@@ -112,4 +127,9 @@ class Member(db.Model):
         self.job_id = job_id
 
     def __repr__(self):
-        return f'{self.__class__.__name__}: {self.id} ({self.name}), level: {self.level}'
+        return json.dumps({
+            'id': self.id,
+            'student_id': self.student_id,
+            'club_id': self.club_id,
+            'job_id': self.job_id
+        })

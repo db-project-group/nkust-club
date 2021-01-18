@@ -1,11 +1,11 @@
 import os
 from flask import Flask, render_template
 from flask_migrate import Migrate
+from flask_jwt_extended import JWTManager
 from config import Config
 from view.api import api
 from db.manage import db_data
 from db.model import *
-from flask_jwt_extended import JWTManager
 
 
 def create_app(dist_path="dist"):
