@@ -10,7 +10,7 @@
             <a-list item-layout="horizontal" :data-source="manage">
               <a-list-item slot="renderItem" slot-scope="item">
                 <a-list-item-meta description="一些簡介">
-                  <router-link slot="title" :to="{ name: 'manage', params: { id: item.id } }">{{ item.title }}</router-link>
+                  <router-link slot="title" :to="{ name: 'manage', params: { id: item.id } }">{{ item.name }}</router-link>
                   <a-avatar
                     slot="avatar"
                     src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
@@ -23,7 +23,7 @@
             <a-list item-layout="horizontal" :data-source="join">
               <a-list-item slot="renderItem" slot-scope="item">
                 <a-list-item-meta description="一些簡介">
-                  <router-link slot="title" :to="{ name: 'announce', params: { id: item.id } }">{{ item.title }}</router-link>
+                  <router-link slot="title" :to="{ name: 'announce', params: { id: item.id } }">{{ item.name }}</router-link>
                   <a-avatar
                     slot="avatar"
                     src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
@@ -34,11 +34,11 @@
           </a-tab-pane>
           <a-tab-pane key="3" tab="所有社團">
             <a-collapse @change="callback">
-              <a-collapse-panel key="1" header="學術性社團">
-                <a-list item-layout="horizontal" :data-source="clubs.academic">
+              <a-collapse-panel key="1" header="自治組織">
+                <a-list item-layout="horizontal" :data-source="clubs['自治組織']">
                   <a-list-item slot="renderItem" slot-scope="item">
                     <a-list-item-meta description="一些簡介">
-                      <router-link slot="title" :to="{ name: 'announce', params: { id: item.id } }">{{ item.title }}</router-link>
+                      <router-link slot="title" :to="{ name: 'announce', params: { id: item.id } }">{{ item.name }}</router-link>
                       <a-avatar
                         slot="avatar"
                         src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
@@ -47,11 +47,12 @@
                   </a-list-item>
                 </a-list>
               </a-collapse-panel>
-              <a-collapse-panel key="2" header="體育性社團" :disabled="false">
-                <a-list item-layout="horizontal" :data-source="clubs.physical">
+              <a-collapse-panel key="2" header="系學會委員會">
+                <a-list item-layout="horizontal" :data-source="clubs['系學會委員會']">
                   <a-list-item slot="renderItem" slot-scope="item">
                     <a-list-item-meta description="一些簡介">
-<router-link slot="title" :to="{ name: 'announce', params: { id: item.id } }">{{ item.title }}</router-link>                      <a-avatar
+                      <router-link slot="title" :to="{ name: 'announce', params: { id: item.id } }">{{ item.name }}</router-link>
+                      <a-avatar
                         slot="avatar"
                         src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
                       />
@@ -59,11 +60,51 @@
                   </a-list-item>
                 </a-list>
               </a-collapse-panel>
-              <a-collapse-panel key="3" header="學生自治">
-                <a-list item-layout="horizontal" :data-source="clubs.student">
+              <a-collapse-panel key="3" header="服務性委員會">
+                <a-list item-layout="horizontal" :data-source="clubs['服務性委員會']">
                   <a-list-item slot="renderItem" slot-scope="item">
                     <a-list-item-meta description="一些簡介">
-<router-link slot="title" :to="{ name: 'announce', params: { id: item.id } }">{{ item.title }}</router-link>                      <a-avatar
+                      <router-link slot="title" :to="{ name: 'announce', params: { id: item.id } }">{{ item.name }}</router-link>
+                      <a-avatar
+                        slot="avatar"
+                        src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
+                      />
+                    </a-list-item-meta>
+                  </a-list-item>
+                </a-list>
+              </a-collapse-panel>
+              <a-collapse-panel key="4" header="學術性委員會">
+                <a-list item-layout="horizontal" :data-source="clubs['學術性委員會']">
+                  <a-list-item slot="renderItem" slot-scope="item">
+                    <a-list-item-meta description="一些簡介">
+                      <router-link slot="title" :to="{ name: 'announce', params: { id: item.id } }">{{ item.name }}</router-link>
+                      <a-avatar
+                        slot="avatar"
+                        src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
+                      />
+                    </a-list-item-meta>
+                  </a-list-item>
+                </a-list>
+              </a-collapse-panel>
+              <a-collapse-panel key="5" header="康樂性委員會">
+                <a-list item-layout="horizontal" :data-source="clubs['康樂性委員會']">
+                  <a-list-item slot="renderItem" slot-scope="item">
+                    <a-list-item-meta description="一些簡介">
+                      <router-link slot="title" :to="{ name: 'announce', params: { id: item.id } }">{{ item.name }}</router-link>
+                      <a-avatar
+                        slot="avatar"
+                        src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
+                      />
+                    </a-list-item-meta>
+                  </a-list-item>
+                </a-list>
+              </a-collapse-panel>
+              <a-collapse-panel key="6" header="體育性委員會">
+                <a-list item-layout="horizontal" :data-source="clubs['體育性委員會']">
+                  <a-list-item slot="renderItem" slot-scope="item">
+                    <a-list-item-meta description="一些簡介">
+                      <router-link slot="title" :to="{ name: 'announce', params: { id: item.id } }">{{ item.name }}</router-link>
+                      <a-avatar
                         slot="avatar"
                         src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
                       />
@@ -85,55 +126,30 @@ export default {
   name: 'Home',
   data () {
     return {
-      manage: [
-        {
-          id: '1',
-          title: '資訊研習社',
-        }
-      ],
-      join: [
-        {
-          id: '2',
-          title: '滔滔社',
-        },
-        {
-          id: '3',
-          title: '映画社'
-        }
-      ],
-      clubs: {
-        academic: [
-          {
-            title: '資訊研習社',
-          },
-          {
-            title: '滔滔社',
-          }
-        ],
-        physical: [
-          {
-            title: '排球社'
-          },
-          {
-            title: '羽球社'
-          }
-        ],
-        student: [
-          {
-            title: '學生會',
-          },
-          {
-            title: '學生議會'
-          }
-        ]
-      }
+      manage: [],
+      join: [],
+      clubs: {}
     }
   },
   mounted () {
-
+    this.getClubs()
   },
   methods: {
-    callback(key) {
+    getClubs () {
+      this.axios.get(
+        '/club'
+      ).then((response) => {
+        console.log(response.data)
+        let clubs = response.data.clubs
+        this.manage = clubs.manage
+        this.join = clubs.join
+        this.clubs = clubs.clubs
+        console.log(this.manage)
+        console.log(this.join)
+        console.log(this.clubs)
+      })
+    },
+    callback (key) {
       console.log(key);
     },
   }

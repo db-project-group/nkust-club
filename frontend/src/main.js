@@ -22,19 +22,35 @@ const instance = axios.create({
 
 instance.interceptors.request.use(
   config => {
-    if (localStorage.JWT_TOKEN) {
-      config.headers.Authorization = `Bearer ${localStorage.JWT_TOKEN}`
+    if (localStorage.getItem('jwt')) {
+      config.headers.Authorization = `Bearer ${localStorage.getItem('jwt')}`
     }
     return config
   },
-  err => {
-    return Promise.reject(err)
+  error => {
+    return Promise.reject(error)
+  })
+
+instance.interceptors.response.use(
+  response => {
+    return response
+  },
+  error => {
+    if (error.response) {
+      console.log('axios:' + error.response.status)
+      switch (error.response.status) {
+        case 401:
+        case 422:
+          auth.logout()
+          router.replace({ path: 'index' })
+      }
+    }
+    return Promise.reject(error.response.data)
   })
 
 auth.checkAuth()
 
 router.beforeEach((to, from, next) => {
-  console.log(to)
   if (to.path === '/') {
     if (localStorage.getItem('jwt')) {
       next('/home')

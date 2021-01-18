@@ -6,9 +6,9 @@
     <a-button class="editable-add-btn" @click="handleAdd">
       新增社員
     </a-button>
-   <a-table :columns="columns" :data-source="data" bordered>
+   <a-table :columns="columns" :data-source="club.members" bordered>
     <template
-      v-for="col in ['grades','number','name', 'office']"
+      v-for="col in ['department','id','name', 'job']"
       :slot="col"
       slot-scope="text, record, index"
     >
@@ -48,15 +48,15 @@
 const columns = [
   {
     title: '班級',
-    dataIndex: 'grades',
+    dataIndex: 'department',
     width: '15%',
-    scopedSlots: { customRender: 'grades' },
+    scopedSlots: { customRender: 'department' },
   },
   {
     title: '學號',
-    dataIndex: 'number',
+    dataIndex: 'id',
     width: '15%',
-    scopedSlots: { customRender: 'number' },
+    scopedSlots: { customRender: 'id' },
   },
   {
     title: '姓名',
@@ -66,9 +66,9 @@ const columns = [
   },
   {
     title: '職位',
-    dataIndex: 'office',
+    dataIndex: 'job.name',
     width: '15%',
-    scopedSlots: { customRender: 'office' },
+    scopedSlots: { customRender: 'job' },
   },
   {
     title: 'operation',
@@ -77,38 +77,30 @@ const columns = [
   },
 ];
 
-const data = [];
-for (let i = 11; i < 30; i++) {
-  data.push({
-    key: i.toString(),
-    grades: `四資工三甲`,
-    number: `C1071511${i}`,
-    name: `Edrward ${i}`,
-    office: `社員`,
-  });
-}
 export default {
   name: 'Member',
   data () {
+    // this.cacheData = data.map(item => ({ ...item }));
     return {
-
-    }
-  },
-  mounted () {
-    // $("#menu-toggle").click(function(e) {
-    //   e.preventDefault();
-    //   $("#wrapper").toggleClass("toggled");
-    // });
-  },
-  data() {
-    this.cacheData = data.map(item => ({ ...item }));
-    return {
-      data,
+      club: {},
       columns,
       editingKey: '',
     };
   },
+  mounted () {
+    console.log()
+    this.getClub()
+  },
   methods: {
+    getClub () {
+      this.axios.get(
+        `/club/${this.$route.params.id}`
+      ).then((response) => {
+        console.log(response.data)
+        let club = response.data.club
+        this.club = club
+      })
+    },
     handleChange(value, key, column) {
       const newData = [...this.data];
       const target = newData.filter(item => key === item.key)[0];

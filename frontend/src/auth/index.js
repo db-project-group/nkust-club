@@ -26,7 +26,12 @@ export default {
   },
   logout () {
     localStorage.removeItem('jwt')
+    localStorage.removeItem('email')
+    localStorage.removeItem('name')
+    localStorage.removeItem('student_id')
+    console.log(this.user)
     this.user.isAuthorized = false
+    // router.replace('index')
   },
   checkAuth () {
     let jwt = localStorage.getItem('jwt')

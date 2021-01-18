@@ -3,41 +3,65 @@
     <router-link to="/" class="logo">
       <p :style="{ margin: '-14px 0 0 5px'}">高科大社團管理系統</p>
     </router-link>
-    <a-menu
+    <!-- <a-menu
       theme="dark"
       mode="horizontal"
       :style="{ lineHeight: '64px', float: 'right' }"
     >
-      <a-menu-item key="1">
-        <a-badge dot><a-avatar style="backgroundColor: #00000000" icon="bell" /></a-badge>
-      </a-menu-item>
-      <a-menu-item key="2">
-        <a-avatar style="backgroundColor: #00000000" icon="user" />
-        <!-- <a-popconfirm
+      <a-menu-item key="1" v-if="isAuthorized">
+        <a-popconfirm
           title="Are you sure logout?"
-          ok-text="Yes"
-          cancel-text="No"
+          ok-text="登出"
+          cancel-text="取消"
           @confirm="confirm"
           @cancel="cancel"
         >
-          <a href="#"><a-avatar style="backgroundColor:#00000000" icon="user" /></a>
-        </a-popconfirm> -->
+          <a-avatar style="backgroundColor: #00000000" icon="user" />
+        </a-popconfirm>
       </a-menu-item>
-    </a-menu>
+    </a-menu> -->
   </a-layout-header>
 </template>
 
 <script>
+import auth from '@/auth'
+
+/* eslint-disable */
 export default {
   name: 'Header',
+  data () {
+    return {
+      // isAuthorized: false
+    }
+  },
+  computed: {
+    // isAuthorized: function () {
+    //   return auth.user.isAuthorized
+    // }
+  },
+  // watch: {
+  //   isAuthorized
+  // },
+  // updated(){
+  //   this.drawMap()
+  // },
+  // mounted () {
+  //   console.log(auth)
+  //   this.isAuthorized = auth.user.isAuthorized
+  // },
   methods: {
+    isAuthorized: function () {
+      return auth.user.isAuthorized
+    },
     confirm (e) {
-      console.log(e)
-      this.$message.success('Click on Yes')
+      // console.log(e)
+      this.$message.success('登出成功')
+      auth.logout()
+      auth.logout
     },
     cancel (e) {
-      console.log(e)
-      this.$message.error('Click on No')
+      // console.log(e)
+      this.$message.error('取消登出')
     }
   }
 }
