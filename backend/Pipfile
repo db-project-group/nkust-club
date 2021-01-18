@@ -6,9 +6,12 @@ name = "pypi"
 [packages]
 flask = "*"
 flask-sqlalchemy = "*"
+flask-migrate = "*"
 flask-graphql = "*"
 graphene-sqlalchemy = "*"
-flask-migrate = "*"
+pymysql = "*"
+google-auth = "*"
+requests = "*"
 
 [dev-packages]
 autopep8 = "*"

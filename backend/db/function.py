@@ -1,4 +1,4 @@
-from db_model import Club, Student, db, Indentity
+from db.model import db, Club, Student, Indentity
 
 def add(student_id, club_id, student_name, club_name, departments, job):
 

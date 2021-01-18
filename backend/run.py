@@ -1,7 +1,10 @@
 import os
 from flask import Flask, render_template
-from view.api import api
+from flask_migrate import Migrate
 from config import Config
+from view.api import api
+from db.manage import db_data
+from db.model import *
 
 
 def create_app(dist_path="dist"):
@@ -10,17 +13,22 @@ def create_app(dist_path="dist"):
                 template_folder=dist_path)
     
     app.config.from_object(Config)
-
+    
     # Frontend route
     @app.route('/')
     def index():
         return render_template("index.html")
 
-    # Api blueprint
+    # Blueprint
     app.register_blueprint(api, url_prefix='/api/v1')
-    
+    app.register_blueprint(db_data)
+
     return app
 
+
+app = create_app("../frontend/dist")
+db.init_app(app)
+migrate = Migrate(app, db)
+
 if __name__ == "__main__":
-    app = create_app("../frontend/dist")
     app.run()

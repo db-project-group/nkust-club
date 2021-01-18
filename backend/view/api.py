@@ -1,6 +1,5 @@
 from flask import Blueprint
-from flask_graphql import GraphQLView
-# from 
+# from flask_graphql import GraphQLView
 
 
 api = Blueprint('api', __name__)
