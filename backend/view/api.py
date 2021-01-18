@@ -1,15 +1,15 @@
-from flask import Blueprint
+from flask import Blueprint, request, jsonify, make_response
 # from flask_graphql import GraphQLView
-from flask import jsonify
-from flask import request
+# from flask_cors import cross_origin, CORS
+from flask_jwt_extended import create_access_token, create_refresh_token, get_jwt_identity, jwt_required, jwt_refresh_token_required
 from google.oauth2 import id_token
 from google.auth.transport import requests
-from flask_jwt_extended import create_access_token, create_refresh_token, get_jwt_identity, jwt_required, jwt_refresh_token_required
 
-GOOGLE_OAUTH2_CLIENT_ID = '687495968491-6k4toog7o8ajqvie4mj28pjnbkgnishm.apps.googleusercontent.com'
 api = Blueprint('api', __name__)
 
-@api.route('/auth', methods = ['post'])
+GOOGLE_OAUTH2_CLIENT_ID = '612719863118-7j2h2p13ggleivj2a3sgbp6jrsnfchmi.apps.googleusercontent.com'
+
+@api.route('/auth', methods = ['POST', 'OPTIONS'])
 def auth():
     token = request.json['id_token']
     try:
@@ -20,13 +20,18 @@ def auth():
         )
         if id_info['iss'] not in ['accounts.google.com', 'https://accounts.google.com']:
             raise ValueError('Wrong issuer.')
+        
+        email = id_info['email']
+        name = id_info['name']
+        student_id = email.split("@")[0].upper()
+        
+        access_token = create_access_token(email)
+        # refresh_token = create_refresh_token(token)
+        
+        return jsonify({ 'access_token': access_token, 'student_id': student_id, 'email': email, 'name': name }), 200
     except ValueError:
         # Invalid token
         raise ValueError('Invalid token')
- 
-    access_token = create_access_token(token)
-    refresh_token = create_refresh_token(token)
-    return jsonify({'access_token': access_token}), 200
 
 @api.route('/JWT_access_token', methods = ['post'])
 @jwt_required
