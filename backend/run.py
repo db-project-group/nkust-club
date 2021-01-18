@@ -2,7 +2,7 @@ import os
 from flask import Flask, render_template
 from view.api import api
 from config import Config
-
+from flask_jwt_extended import JWTManager
 
 def create_app(dist_path="dist"):
     app = Flask(__name__,
@@ -23,4 +23,6 @@ def create_app(dist_path="dist"):
 
 if __name__ == "__main__":
     app = create_app("../frontend/dist")
+    jwt = JWTManager()
+    jwt.init_app(app)
     app.run()

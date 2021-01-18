@@ -4,10 +4,13 @@
         <h2>高科大社團管理系統</h2>
     </a-divider>
     <a-row type="flex" justify="center" align="top" :style="{ 'margin-bottom': '50px' }">
-      <!-- <router-link to="/home" class="google-signin-button" text-align=center>
+      <a-button class="google-signin-button" @click="onSignIn">
         <a-icon type="google" :style="{ 'margin-right': '10px' }" /> 使用 Google 登入
-      </router-link> -->
-      <div class="g-signin2" data-onsuccess="onSignIn"></div>
+      </a-button>
+      <!-- <a-button class="google-signin-button" @click="test2">
+        <a-icon type="button" :style="{ 'margin-right': '10px' }" /> test
+      </a-button> -->
+      <!-- <div class="g-signin2" data-onsuccess="onSignIn"></div> -->
     </a-row>
     <a-row type="flex" justify="center" align="middle">
       <a-col :span="12">
@@ -32,6 +35,32 @@ export default {
 
     }
   },
+  
+  methods: {
+    onSignIn(){
+      this.$gAuth.signIn()
+      .then(user => {
+        // On success do something, refer to https://developers.google.com/api-client-library/javascript/reference/referencedocs#googleusergetid
+        console.log('user', user)
+        this.isSignIn = this.$gAuth.isAuthorized
+        this.axios.post('/api/v1/auth', JSON.stringify({id_token: user.Bc.id_token}), {headers: {'Content-Type': 'application/json' }}).then((response) => {
+          console.log(response.data)
+          this.store.state = {
+            user: response.data,
+            isLoading: true
+          }
+          })
+      })
+      .catch(error  => {
+        console.log('error', error)
+      })
+    },
+    // test2(){
+    //   this.axios.post('/api/v1/JWT_access_token', JSON.stringify({id_token: user.Bc.id_token}), {headers: {'Content-Type': 'application/json' }}).then((response) => {
+    //       console.log(response.data)})
+    // }
+  },
+
   mounted () {
     // $("#menu-toggle").click(function(e) {
     //   e.preventDefault();
