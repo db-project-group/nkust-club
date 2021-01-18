@@ -9,6 +9,8 @@ flask-sqlalchemy = "*"
 flask-graphql = "*"
 graphene-sqlalchemy = "*"
 flask-migrate = "*"
+google-auth = "*"
+flask-jwt-extended = "*"
 
 [dev-packages]
 autopep8 = "*"
