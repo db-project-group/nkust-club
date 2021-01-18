@@ -2,29 +2,23 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import createPersistedState from 'vuex-persistedstate'
 
-/* eslint-disable no-new */
+import auth from './modules/auth.js'
+
+/* eslint-disable */
 Vue.use(Vuex)
 
-const store = new Vuex.Store({
-    plugins: [createPersistedState()],
-    state: {
-        user: '',
-        isLoading: false,
-        num: ['1']
-    },
-    mutations: {
-        loading (state, str) {
-            let list = []
-            list.push(str)
-            state.num = [...state.num, ...list]
-            console.log('ok')
-        }
-    },
-    gets: {
-        readuser(state){
-            return state.user
-        }
+export default new Vuex.Store({
+  modules: {
+    auth
+  },
+  plugins: [createPersistedState({
+    storage: window.localStorage,
+    reducer(val) {
+      return {
+        auth: val.auth
+      }
     }
+  })]
 })
 
 export default store

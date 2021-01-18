@@ -26,6 +26,8 @@
 </template>
 
 <script>
+import auth from '@/auth'
+
 /* eslint-disable */
 // import GoogleLoginButton from 'vue-google-login-button-directive'
 export default {
@@ -41,17 +43,7 @@ export default {
       this.$gAuth.signIn()
         .then(user => {
           console.log('user', user)
-          this.isSignIn = this.$gAuth.isAuthorized
-          this.axios.post(
-              '/auth',
-              JSON.stringify({ id_token: user.Bc.id_token }
-            )).then((response) => {
-              console.log(response.data)
-              // this.store.state = {
-              //   user: response.data,
-              //   isLoading: true
-              // }
-            })
+          auth.login(this, JSON.stringify({ id_token: user.Bc.id_token }), this.$gAuth.isAuthorized, 'home')
         })
         .catch(error  => {
           console.log('error', error)
