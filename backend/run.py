@@ -5,6 +5,7 @@ from config import Config
 from view.api import api
 from db.manage import db_data
 from db.model import *
+from flask_jwt_extended import JWTManager
 
 
 def create_app(dist_path="dist"):
@@ -29,6 +30,7 @@ def create_app(dist_path="dist"):
 app = create_app("../frontend/dist")
 db.init_app(app)
 migrate = Migrate(app, db)
+jwt = JWTManager(app)
 
 if __name__ == "__main__":
     app.run()
