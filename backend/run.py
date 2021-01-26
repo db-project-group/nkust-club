@@ -27,7 +27,7 @@ def create_app(dist_path="dist"):
     return app
 
 
-app = create_app("../frontend/dist")
+app = create_app("./dist")
 db.init_app(app)
 migrate = Migrate(app, db)
 jwt = JWTManager(app)
